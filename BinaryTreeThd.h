@@ -60,26 +60,15 @@ public:
 		Node* prev = NULL;
 		_PosOrderThreading(_root,prev);
 	}
-	void PrevOrderThd()//先序遍历
-	{
-		_PrevOrderThd(_root);
-	}
-	void InOrderThd()//中序遍历
-	{
-		_InOrderThd(_root);
-	}
-	void PosOrderThd()//后序遍历
-	{
-		_PosOrderThd(_root);
-	}
+	void PrevOrderThd();//先序遍历
+	void InOrderThd();//中序遍历
+	//void PosOrderThd();//后序遍历
+	
 protected:
 	Node* _CreateBinaryTree(const T*a, size_t size, const T& invalid, size_t& index);
 	void _PrevOrderThreading(Node* root, Node* &prev);
 	void _InOrderThreading(Node* root, Node* &prev);
 	void _PosOrderThreading(Node* root,Node* &prev);
-	void _PrevOrderThd(Node* root);
-	void _InOrderThd(Node* root);
-	void _PosOrderThd(Node* root);
 	
 private:
 	Node* _root;
@@ -137,25 +126,83 @@ void BinaryTreeThd<T>::_PrevOrderThreading(Node*  root, Node* &prev)
 	
 }
 
+////先序遍历二叉树
+//template<class T>
+//void BinaryTreeThd<T>::PrevOrderThd()
+//{
+//	Node* cur = _root;
+//	while (cur)
+//	{
+//		cout << cur->_data << " ";
+//		//左子树有孩子
+//		if (cur->_leftTag == LINK)
+//		{
+//			cur = cur->_left;
+//			continue;//结束本次循环
+//		}
+//
+//		//不管右子树有没有孩子，均当成一个子问题来解决
+//		cur = cur->_right;
+//		
+//	}
+//}
+
 //先序遍历二叉树
 template<class T>
-void BinaryTreeThd<T>::_PrevOrderThd(Node* root)
+void BinaryTreeThd<T>::PrevOrderThd()
 {
-	Node* cur = root;
+	Node* cur = _root;
 	while (cur)
 	{
-		cout << cur->_data << " ";
-		if (cur->_leftTag == LINK)
+		//遍历最左边
+		while (cur->_leftTag == LINK)
 		{
+			cout << cur->_data << " ";
 			cur = cur->_left;
-			continue;//结束本次循环
 		}
+		cout << cur->_data << " ";
 
+		//不管右子树有没有孩子，均看成子问题
 		cur = cur->_right;
-		
 	}
 }
 
+//
+////先序遍历二叉树
+//template<class T>
+//void BinaryTreeThd<T>::PrevOrderThd()
+//{
+//	Node* cur = _root;
+//	while (cur)
+//	{
+//		//遍历最左边
+//		while (cur->_leftTag == LINK)
+//		{
+//			cout << cur->_data << " ";
+//			cur = cur->_left;
+//		}
+//		cout << cur->_data << " ";
+//
+//		//遍历其连续后继
+//		while (cur->_rightTag == THREAD)
+//		{
+//			cur = cur->_right;
+//			cout << cur->_data << " ";
+//		}
+//
+//		//后继节点左孩子不为空
+//		if (cur->_leftTag == LINK)
+//		{
+//			cur = cur->_left;
+//		}
+//		//遍历后继结点右孩子
+//		else
+//		{ 
+//			cur = cur->_right;
+//		}
+//		
+//	}
+//}
 //中序线索化
 template<class T>
 void BinaryTreeThd<T>::_InOrderThreading(Node* root, Node* &prev)
@@ -192,9 +239,9 @@ void BinaryTreeThd<T>::_InOrderThreading(Node* root, Node* &prev)
 
 //中序遍历二叉树
 template<class T>
-void BinaryTreeThd<T>::_InOrderThd(Node*root)
+void BinaryTreeThd<T>::InOrderThd()
 {
-	Node* cur = root;
+	Node* cur = _root;
 	while (cur)
 	{
 		//找到最左下角的节点
@@ -211,6 +258,7 @@ void BinaryTreeThd<T>::_InOrderThd(Node*root)
 			cur = cur->_right;
 			cout << cur->_data << " ";
 		}
+
 		//右孩子为LINK时，转换为子问题
 		cur = cur->_right;
 	}
@@ -252,27 +300,27 @@ void BinaryTreeThd<T>::_PosOrderThreading(Node* root, Node* &prev)
 	prev = cur;
 }
 
-//后续遍历二叉线索树
-template<class T>
-void BinaryTreeThd<T>::_PosOrderThd(Node* root)
-{
-	Node* cur = root;
-	Node* prev = NULL;
-	while (cur)
-	{
-		while (cur->_leftTag == LINK&&cur->_left!=prev)
-		{
-			cur = cur->_left;
-		}
-		
-		if (cur->_left == LINK || prev == cur->_right)
-		{
-			cout << cur->_data << " ";
-			cur = prev;
-		}
-		else
-		{
-			cur = cur->_right;
-		}	
-	}	
-}
+////后续遍历二叉线索树
+//template<class T>
+//void BinaryTreeThd<T>::_PosOrderThd(Node* root)
+//{
+//	Node* cur = root;
+//	Node* prev = NULL;
+//	while (cur)
+//	{
+//		while (cur->_leftTag == LINK&&cur->_left!=prev)
+//		{
+//			cur = cur->_left;
+//		}
+//		
+//		if (cur->_left == LINK || prev == cur->_right)
+//		{
+//			cout << cur->_data << " ";
+//			cur = prev;
+//		}
+//		else
+//		{
+//			cur = cur->_right;
+//		}	
+//	}	
+//}
